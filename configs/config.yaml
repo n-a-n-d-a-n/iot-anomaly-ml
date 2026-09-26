@@ -1,0 +1,81 @@
+database:
+  path: data/anomaly_detection.db
+
+generator:
+  seed: 42
+  days: 30
+  dev_days: 1
+  sampling_interval_minutes: 1
+  operating_regimes: [low, normal, high]
+  anomaly_rate: 0.04
+  min_anomaly_gap: 40
+  severity: 1.0
+  anomaly_types:
+    - sudden_spike
+    - sudden_drop
+    - gradual_drift
+    - sensor_bias
+    - increased_noise
+    - sensor_dropout
+    - stuck_sensor
+    - oscillation
+    - correlated_multi_sensor
+    - gradual_process_degradation
+
+sensors:
+  # Actuators
+  pump_1_speed: {min: 1000, max: 2000, unit: rpm, group: actuator}
+  pump_2_speed: {min: 800, max: 1800, unit: rpm, group: actuator}
+  valve_1_position: {min: 20, max: 100, unit: "%", group: actuator}
+  valve_2_position: {min: 20, max: 100, unit: "%", group: actuator}
+  dosing_rate: {min: 5, max: 25, unit: L/h, group: actuator}
+  # Flow
+  pump_flow: {min: 30, max: 90, unit: m3/h, group: flow}
+  inlet_flow: {min: 35, max: 95, unit: m3/h, group: flow}
+  outlet_flow: {min: 25, max: 80, unit: m3/h, group: flow}
+  recycle_flow: {min: 2, max: 25, unit: m3/h, group: flow}
+  # Pressure
+  pressure: {min: 1.5, max: 5.5, unit: bar, group: pressure}
+  inlet_pressure: {min: 1.5, max: 4.5, unit: bar, group: pressure}
+  pump_pressure: {min: 2.0, max: 6.5, unit: bar, group: pressure}
+  filter_pressure: {min: 0.5, max: 3.5, unit: bar, group: pressure}
+  # Level
+  tank_1_level: {min: 2.0, max: 8.0, unit: m, group: level}
+  tank_2_level: {min: 2.0, max: 7.5, unit: m, group: level}
+  tank_3_level: {min: 1.5, max: 6.5, unit: m, group: level}
+  reservoir_level: {min: 5.0, max: 10.0, unit: m, group: level}
+  # Temperature
+  temperature: {min: 15, max: 40, unit: celsius, group: temperature}
+  pump_temperature: {min: 40, max: 85, unit: celsius, group: temperature}
+  motor_temperature: {min: 50, max: 100, unit: celsius, group: temperature}
+  # Quality
+  pH: {min: 6.0, max: 8.5, unit: pH, group: quality}
+  conductivity: {min: 400, max: 900, unit: uS/cm, group: quality}
+  turbidity: {min: 0.5, max: 6.0, unit: NTU, group: quality}
+  chlorine: {min: 0.5, max: 3.5, unit: mg/L, group: quality}
+  # Electrical
+  power: {min: 10, max: 40, unit: kW, group: electrical}
+  motor_current: {min: 15, max: 55, unit: A, group: electrical}
+  motor_voltage: {min: 380, max: 420, unit: V, group: electrical}
+  vibration: {min: 0.5, max: 6.0, unit: mm/s, group: electrical}
+
+anomaly:
+  injection_rate: 0.04
+  types: [sudden_spike, sudden_drop, gradual_drift, sensor_bias, increased_noise, sensor_dropout, stuck_sensor, oscillation, correlated_multi_sensor, gradual_process_degradation]
+
+models:
+  isolation_forest: {contamination: 0.05, n_estimators: 100}
+  autoencoder: {hidden_dims: [32, 16, 8], epochs: 30, lr: 0.001}
+  dbscan: {eps: 1.9, min_samples: 5}
+  ensemble_weights: {isolation_forest: 0.25, autoencoder: 0.25, dbscan: 0.25, gmm: 0.25}
+
+streaming:
+  queue_size: 1000
+  window_minutes: 60
+  latency_target_ms: 50
+
+alerting:
+  score_threshold: 0.8
+  frequency_threshold: {count: 5, minutes: 10}
+  cooldown_seconds: 300
+  webhook_url: null

@@ -1,0 +1,167 @@
+{
+  "dataset": {
+    "samples": 282240,
+    "time_steps": 10080,
+    "features": 28,
+    "feature_names": [
+      "chlorine_00",
+      "conductivity_00",
+      "dosing_rate_00",
+      "filter_pressure_00",
+      "inlet_flow_00",
+      "inlet_pressure_00",
+      "motor_current_00",
+      "motor_temperature_00",
+      "motor_voltage_00",
+      "outlet_flow_00",
+      "pH_00",
+      "power_00",
+      "pressure_00",
+      "pump_1_speed_00",
+      "pump_2_speed_00",
+      "pump_flow_00",
+      "pump_pressure_00",
+      "pump_temperature_00",
+      "recycle_flow_00",
+      "reservoir_level_00",
+      "tank_1_level_00",
+      "tank_2_level_00",
+      "tank_3_level_00",
+      "temperature_00",
+      "turbidity_00",
+      "valve_1_position_00",
+      "valve_2_position_00",
+      "vibration_00"
+    ],
+    "anomaly_rate": 0.025694444444444443,
+    "anomaly_percentage": 2.569444444444444,
+    "anomaly_windows_count": 8,
+    "min_anomaly_duration": 30,
+    "max_anomaly_duration": 38,
+    "avg_anomaly_duration": 32.375,
+    "random_seed": 42,
+    "correlations": {
+      "pump_1_speed_00 <-> pump_flow_00": 0.9886564584815388,
+      "motor_current_00 <-> power_00": 0.8318644323859976,
+      "motor_current_00 <-> motor_temperature_00": 0.8330644451530618,
+      "pump_flow_00 <-> pump_pressure_00": 0.924167505209735,
+      "valve_1_position_00 <-> pump_flow_00": 0.9473199837586417,
+      "dosing_rate_00 <-> pH_00": -0.6647688192709311,
+      "dosing_rate_00 <-> chlorine_00": 0.7546777949637454
+    }
+  },
+  "split": {
+    "train": 7056,
+    "validation": 1512,
+    "test": 1512,
+    "train_anomalies": 0,
+    "val_anomalies": 95,
+    "test_anomalies": 164
+  },
+  "models": {
+    "Isolation Forest": {
+      "precision": 0.18167456556082148,
+      "recall": 0.7012195121951219,
+      "f1": 0.28858218318695106,
+      "auc_roc": 0.7009616776434826,
+      "pr_auc": 0.267128189805622,
+      "confusion_matrix": [
+        [
+          830,
+          518
+        ],
+        [
+          49,
+          115
+        ]
+      ]
+    },
+    "Autoencoder": {
+      "precision": 0.15845410628019324,
+      "recall": 1.0,
+      "f1": 0.2735613010842369,
+      "auc_roc": 0.9340825613374828,
+      "pr_auc": 0.7802724761758522,
+      "confusion_matrix": [
+        [
+          477,
+          871
+        ],
+        [
+          0,
+          164
+        ]
+      ]
+    },
+    "DBSCAN": {
+      "precision": 0.22239031770045387,
+      "recall": 0.8963414634146342,
+      "f1": 0.3563636363636364,
+      "auc_roc": 0.8974994571904176,
+      "pr_auc": 0.7029628539316148,
+      "confusion_matrix": [
+        [
+          834,
+          514
+        ],
+        [
+          17,
+          147
+        ]
+      ]
+    },
+    "GMM": {
+      "precision": 0.1312,
+      "recall": 1.0,
+      "f1": 0.23196605374823195,
+      "auc_roc": 0.7764393500759933,
+      "pr_auc": 0.21395739895287488,
+      "confusion_matrix": [
+        [
+          262,
+          1086
+        ],
+        [
+          0,
+          164
+        ]
+      ]
+    },
+    "Ensemble": {
+      "precision": 0.8210526315789474,
+      "recall": 0.47560975609756095,
+      "f1": 0.6023166023166023,
+      "auc_roc": 0.9300951726134472,
+      "pr_auc": 0.6934881019971971,
+      "confusion_matrix": [
+        [
+          1331,
+          17
+        ],
+        [
+          86,
+          78
+        ]
+      ]
+    }
+  },
+  "ensemble": {
+    "weights": {
+      "isolation_forest": 0.25,
+      "autoencoder": 0.25,
+      "dbscan": 0.25,
+      "gmm": 0.25
+    },
+    "threshold": 0.6060606060606061
+  },
+  "timing": {
+    "data_generation": 2.0574774999986403,
+    "preprocessing": 0.21806110000034096,
+    "isolation_forest_train": 9.108784700001706,
+    "autoencoder_train": 14.148043600000165,
+    "dbscan_train": 0.39182570000048145,
+    "gmm_train": 1.6539754000004905,
+    "ensemble_inference": 1.0692128999999113,
+    "total_pipeline": 30.86291920000076
+  }
+}
