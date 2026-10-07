@@ -47,7 +47,7 @@ This project implements a **complete, end-to-end unsupervised anomaly detection 
 
 | Principle | Implementation |
 |-----------|---------------|
-| **No Labels Required** | Fully unsupervised — trains only on normal operational data |
+| **No Labels Required** | Fully unsupervised - trains only on normal operational data |
 | **Leak-Safe Evaluation** | Strict chronological 70/15/15 split; threshold calibrated on validation only |
 | **Explainable by Default** | Every alert comes with ranked sensor contributors, z-scores, and correlation context |
 | **Physics-Correlated Simulation** | 28 sensors coupled via real process physics (pump speed → flow → pressure → power) |
