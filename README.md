@@ -12,7 +12,7 @@
 [![Tests](https://img.shields.io/badge/Tests-199%20passed-brightgreen?logo=pytest)](https://pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-*Detect anomalies in complex industrial process telemetry using a four-model ensemble — with full explainability, real-time streaming replay, interactive operator dashboard, and REST API.*
+*Detect anomalies in complex industrial process telemetry using a four-model ensemble - with full explainability, real-time streaming replay, interactive operator dashboard, and REST API.*
 
 </div>
 
